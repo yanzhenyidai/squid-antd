@@ -6,9 +6,13 @@ import Welcome from '../views/Welcome'
 /*ANT*/
 import AntTable from '../views/antd/Table'
 import AntForm from '../views/antd/Form'
+import AntDrawer from '../views/antd/Drawer'
+import AntLayout from '../views/antd/Drawer-Layout'
 /*ELE*/
 import EleTable from '../views/element/Table'
 import EleForm from '../views/element/Form'
+import EleDrawer from '../views/element/Drawer'
+import EleLayout from '../views/element/Drawer-Layout'
 
 Vue.use(VueRouter)
 
@@ -40,17 +44,48 @@ export default new VueRouter({
                     name: 'form',
                     component: AntForm
                 },
+                {
+                    path: '/index/ant-drawer',
+                    name: 'drawer',
+                    component: AntDrawer,
+                    children: [
+                        {
+                            path: '/index/ant-drawer/',
+                            name: 'layout',
+                            component: AntLayout
+                        }
+                    ]
+                },
 
                 // ELE
                 {
                     path: '/index/ele-table',
                     name: 'table',
-                    component: EleTable
+                    component: EleTable,
+                    children: [
+                        {
+                            path: '/index/ele-table/',
+                            name: 'layout',
+                            component: EleLayout
+                        }
+                    ]
                 },
                 {
                     path: '/index/ele-form',
                     name: 'form',
                     component: EleForm
+                },
+                {
+                    path: '/index/ele-drawer',
+                    name: 'drawer',
+                    component: EleDrawer,
+                    children: [
+                        {
+                            path: '/index/ele-drawer/',
+                            name: 'layout',
+                            component: EleLayout
+                        }
+                    ]
                 },
             ]
         }

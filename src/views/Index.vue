@@ -26,6 +26,11 @@
           <a-menu-item key="5">
             弹窗
           </a-menu-item>
+          <a-menu-item key="6">
+            <router-link to="/index/ant-drawer">
+              抽屉
+            </router-link>
+          </a-menu-item>
         </a-sub-menu>
         <a-sub-menu key="sub2">
           <span slot="title"><a-icon type="user" /><span>Element</span></span>
@@ -42,6 +47,11 @@
           </a-menu-item>
           <a-menu-item key="12">
             弹窗
+          </a-menu-item>
+          <a-menu-item key="13">
+            <router-link to="/index/ele-drawer">
+              抽屉
+            </router-link>
           </a-menu-item>
         </a-sub-menu>
       </a-menu>

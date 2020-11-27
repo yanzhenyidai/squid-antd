@@ -1,5 +1,5 @@
 <template>
-  <div v-loading="loading">
+  <div>
 
     <el-form :inline="true" :model="fUser" class="demo-form-inline" size="mini">
       <el-form-item label="用户代码">
@@ -33,8 +33,11 @@
         :data="tableData"
         border
         size="mini"
+        height="630px"
         max-height="630px"
-        style="width: 100%;margin-top: 15px">
+        style="width: 100%;margin-top: 15px"
+        v-loading="loading"
+    >
       <el-table-column
           type="selection"
           width="55">
@@ -60,44 +63,63 @@
           show-overflow-tooltip>
       </el-table-column>
       <el-table-column
+          prop="userCode"
+          label="用户代码"
+          show-overflow-tooltip>
+      </el-table-column>
+      <el-table-column
           fixed="right"
           label="操作"
           width="100">
-        <template slot-scope="scope">
-          <el-button @click="handleClick(scope.row)" type="text" size="small">查看</el-button>
+        <!--        <template slot-scope="scope">-->
+        <template>
+          <el-button @click="drawer=true" type="text" size="small">查看</el-button>
           <el-button type="text" size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <div style="float: right;margin-top: 5px">
+    <div style="margin-top: 10px">
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
-          :current-page="currentPage4"
-          :page-sizes="[100, 200, 300, 400]"
-          :page-size="100"
+          :current-page="currentPage"
+          :page-sizes="[10, 20, 50, 100]"
+          :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="400">
+          :total="pageTotal">
       </el-pagination>
     </div>
+
+    <el-drawer
+        title="我是标题"
+        :visible.sync="drawer"
+        :with-header="false"
+        :modal-append-to-body="false"
+        :size="`90%`"
+        :show-close="true"
+    >
+      <router-view/>
+    </el-drawer>
   </div>
 </template>
 
 <script>
-const tableData = [];
 
 export default {
   data() {
     return {
-      tableData: tableData,
+      drawer: false,
+      tableData: [],
       multipleSelection: [],
-      currentPage1: 5,
-      currentPage2: 5,
-      currentPage3: 5,
-      currentPage4: 4,
+      currentPage: 1,
+      pageSize: 10,
       loading: true,
+      pageTotal: 0,
       fUser: {
+        userName: '',
+        userCode: '',
+        isLock: ''
       }
     }
   },
@@ -116,24 +138,33 @@ export default {
       this.multipleSelection = val;
     },
     handleSizeChange(val) {
-      console.log(`每页 ${val} 条`);
+      this.pageSize = val
+      this.findByPage()
     },
     handleCurrentChange(val) {
-      console.log(`当前页: ${val}`);
+      this.currentPage = val
+      this.findByPage()
     },
     onSubmit() {
-      console.log('submit!');
+      this.findByPage();
+    },
+    findByPage() {
+      this.loading = true
+
+      this.$axios({
+        url: `/fUser/findByPage/${this.currentPage}/${this.pageSize}`,
+        method: 'post',
+        contentType: 'application/json',
+        data: this.fUser
+      }).then((response) => {
+        this.tableData = response.data.content;
+        this.pageTotal = response.data.totalElements;
+        this.loading = false;
+
+      })
     }
   }, mounted() {
-    this.$axios({
-      url: '/fUser/findAll',
-      method: 'post',
-      contentType: 'application/json',
-      data: {}
-    }).then((response) => {
-      this.tableData = response.data;
-      this.loading = false;
-    })
+    this.findByPage()
   }
 }
 </script>

@@ -62,7 +62,7 @@
       </a-radio-group>
     </a-form-model-item>
     <a-form-model-item label="Activity form" prop="desc">
-      <a-input v-model="form.desc" type="textarea" />
+      <a-input v-model="msg" type="textarea" />
     </a-form-model-item>
     <a-form-model-item :wrapper-col="{ span: 14, offset: 4 }">
       <a-button type="primary" @click="onSubmit">
@@ -76,6 +76,9 @@
 </template>
 <script>
 export default {
+  props: {
+    msg: String
+  },
   data() {
     return {
       labelCol: { span: 4 },

@@ -1,5 +1,5 @@
 <template>
-  <el-form :model="fUser"  ref="fUser" label-width="100px" class="demo-ruleForm" size="small">
+  <el-form :model="fUser" :rules="rules" ref="fUser" label-width="100px" class="demo-ruleForm" size="small">
     <el-form-item label="用户代码" prop="userCode">
       <el-input v-model="fUser.userCode"></el-input>
     </el-form-item>
@@ -7,7 +7,7 @@
       <el-input v-model="fUser.userName"></el-input>
     </el-form-item>
     <el-form-item label="密码" prop="password">
-      <el-input v-model="fUser.password"></el-input>
+      <el-input v-model="fUser.password" show-password></el-input>
     </el-form-item>
     <el-form-item label="Email" prop="email">
       <el-input v-model="fUser.email"></el-input>
@@ -39,30 +39,24 @@ export default {
         phone: '',
         isLock: ''
       },
-      // rules: {
-      //   name: [
-      //     {required: true, message: '请输入活动名称', trigger: 'blur'},
-      //     {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
-      //   ],
-      //   region: [
-      //     {required: true, message: '请选择活动区域', trigger: 'change'}
-      //   ],
-      //   date1: [
-      //     {type: 'date', required: true, message: '请选择日期', trigger: 'change'}
-      //   ],
-      //   date2: [
-      //     {type: 'date', required: true, message: '请选择时间', trigger: 'change'}
-      //   ],
-      //   type: [
-      //     {type: 'array', required: true, message: '请至少选择一个活动性质', trigger: 'change'}
-      //   ],
-      //   resource: [
-      //     {required: true, message: '请选择活动资源', trigger: 'change'}
-      //   ],
-      //   desc: [
-      //     {required: true, message: '请填写活动形式', trigger: 'blur'}
-      //   ]
-      // }
+      rules: {
+        userName: [
+          {required: true, message: '请输入用户名', trigger: 'blur'},
+          // {min: 3, max: 5, message: '长度在 3 到 5 个字符', trigger: 'blur'}
+        ],
+        userCode: [
+          {required: true, message: '请输入用户代码', trigger: 'blur'}
+        ],
+        isLock: [
+          {required: true, message: '请选择是否锁定', trigger: 'change'}
+        ],
+        password: [
+          {required: true, message: '请输入密码', trigger: 'blur'}
+        ],
+        email: [
+          {required: true, message: '请输入邮箱信息', trigger: 'blur'}
+        ]
+      }
     };
   },
   methods: {
@@ -76,11 +70,17 @@ export default {
             contentType: 'application/json',
             data: this.fUser
           }).then((response) => {
-            console.log(response);
+            // eslint-disable-next-line no-empty
+            if(response.data.id !== null){
+              this.$message({
+                showClose: true,
+                message: '创建成功',
+                type: 'success',
+              });
+
+              this.$refs[formName].resetFields();
+            }
           })
-        } else {
-          console.log('error submit!!');
-          return false;
         }
       });
     },

@@ -1,6 +1,8 @@
 <template>
   <div id="app">
+    <keep-alive>
       <router-view></router-view>
+    </keep-alive>
   </div>
 </template>
 
@@ -11,7 +13,7 @@ export default {
 </script>
 
 <style scoped>
-#app{
+#app {
   height: 100%;
 }
 </style>
