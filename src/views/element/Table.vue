@@ -1,42 +1,44 @@
 <template>
   <div>
-
-    <el-form :inline="true" :model="fUser" class="demo-form-inline" size="mini">
-      <el-form-item label="用户代码">
-        <el-input v-model="fUser.userCode" placeholder="用户代码"></el-input>
-      </el-form-item>
-      <el-form-item label="用户名">
-        <el-input v-model="fUser.userName" placeholder="用户名"></el-input>
-      </el-form-item>
-      <el-form-item label="是否锁定">
-        <el-select v-model="fUser.isLock" placeholder="是否锁定">
-          <el-option label="全部" value=""></el-option>
-          <el-option label="否" value="0"></el-option>
-          <el-option label="是" value="1"></el-option>
-        </el-select>
-      </el-form-item>
-      <el-form-item>
-        <el-button type="primary" @click="onSubmit">查询</el-button>
-      </el-form-item>
+    <el-form :inline="true" :model="fUser" style="margin-top: 20px" class="demo-form-inline" size="small">
+      <el-row :gutter="20">
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="用户代码">
+              <el-input v-model="fUser.userCode" placeholder="用户代码"></el-input>
+            </el-form-item>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="用户名">
+              <el-input v-model="fUser.userName" placeholder="用户名"></el-input>
+            </el-form-item>
+          </div>
+        </el-col>
+        <el-col :span="8">
+          <div class="grid-content bg-purple">
+            <el-form-item label="是否锁定">
+              <el-select v-model="fUser.isLock" placeholder="是否锁定">
+                <el-option label="全部" value=""></el-option>
+                <el-option label="否" value="0"></el-option>
+                <el-option label="是" value="1"></el-option>
+              </el-select>
+            </el-form-item>
+          </div>
+        </el-col>
+      </el-row>
     </el-form>
 
-    <el-row>
-      <el-button size="small">默认按钮</el-button>
-      <el-button size="small" type="primary">主要按钮</el-button>
-      <el-button size="small" type="success">成功按钮</el-button>
-      <el-button size="small" type="info">信息按钮</el-button>
-      <el-button size="small" type="warning">警告按钮</el-button>
-      <el-button size="small" type="danger">危险按钮</el-button>
-    </el-row>
 
     <el-table
         :data="tableData"
+        :height="tableHeight"
         border
-        size="mini"
-        height="630px"
-        max-height="630px"
-        style="width: 100%;margin-top: 15px"
+        size="small"
+        style="width: 100%;"
         v-loading="loading"
+        ref="topictable"
     >
       <el-table-column
           type="selection"
@@ -116,6 +118,7 @@ export default {
       pageSize: 10,
       loading: true,
       pageTotal: 0,
+      tableHeight: null,
       fUser: {
         userName: '',
         userCode: '',
@@ -165,6 +168,13 @@ export default {
     }
   }, mounted() {
     this.findByPage()
+    console.log(window.innerHeight)
+    console.log(this.$refs.topictable.$el)
+    console.log(this.$refs.topictable.$el.offsetTop)
+    this.tableHeight =
+        window.innerHeight - this.$refs.topictable.$el.offsetTop - 60;
+    console.log(this.tableHeight)
+
   }
 }
 </script>
