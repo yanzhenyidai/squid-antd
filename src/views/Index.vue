@@ -2,11 +2,13 @@
   <el-container>
     <el-header>
       <div>
-        <el-image src="https://www.baidu.com/img/flexible/logo/pc/result.png" fit="scale-down" style="height: 35px;float: left;margin-top: 10px"/>
+        <el-image src="https://www.baidu.com/img/flexible/logo/pc/result.png" fit="scale-down"
+                  style="height: 35px;float: left;margin-top: 10px"/>
       </div>
 
       <el-dropdown style="float: right" size="medium" placement="bottom">
-        <i class="el-icon-user-solid" style="margin-right: 15px;font-weight: bold;padding: 5px;cursor:pointer">欢迎您，王小虎</i>
+        <i class="el-icon-user-solid"
+           style="margin-right: 15px;font-weight: bold;padding: 5px;cursor:pointer">欢迎您，王小虎</i>
         <el-dropdown-menu slot="dropdown">
           <el-dropdown-item>个人信息</el-dropdown-item>
           <el-dropdown-item>退出登录</el-dropdown-item>
@@ -18,14 +20,17 @@
       <el-aside width="210px">
 
         <el-menu
-            default-active="1-1"
+            :default-active="activeMenu"
             class="el-menu-vertical-demo"
             background-color="#545c64"
             text-color="#fff"
             active-text-color="#ffd04b"
             @open="handleOpen"
-            @close="handleClose">
-          <el-submenu index="1">
+            @close="handleClose"
+            :router="true">
+
+          <SideMenu v-for="menu in menus" :key="menu.path" :menu="menu" :base-path="menu.path"/>
+          <!--<el-submenu index="1">
             <template slot="title">
               <i class="el-icon-location"></i>
               <span>导航一</span>
@@ -59,13 +64,13 @@
           <el-menu-item index="4">
             <i class="el-icon-setting"></i>
             <span slot="title">导航四</span>
-          </el-menu-item>
+          </el-menu-item>-->
         </el-menu>
 
       </el-aside>
       <el-container>
         <el-main>
-          <router-view></router-view>
+          <router-view :key="key"></router-view>
         </el-main>
       </el-container>
     </el-container>
@@ -73,12 +78,30 @@
 </template>
 
 <script>
+import {mapGetters} from 'vuex'
+import SideMenu from "@/views/ele-layout/SideMenu";
+
 export default {
   name: "Index",
   data() {
     return {
       isCollapse: true,
       disabled: true
+    }
+  },
+  computed: {
+    ...mapGetters(['menus']),
+    key() {
+      return this.$route.path
+    },
+    activeMenu(){
+      const route = this.$route
+      const { meta, path } = route
+      // if set path, the sidebar will highlight the path you set
+      if (meta.activeMenu) {
+        return meta.activeMenu
+      }
+      return path
     }
   },
   methods: {
@@ -88,6 +111,9 @@ export default {
     handleClose(key, keyPath) {
       console.log(key, keyPath);
     }
+  },
+  components: {
+    SideMenu
   }
 }
 </script>
@@ -103,7 +129,7 @@ export default {
 
 }
 
-.el-footer{
+.el-footer {
   background-color: #B3C0D1;
   color: #333;
   text-align: center;
@@ -129,6 +155,7 @@ export default {
   /*line-height: 160px;*/
   padding: 10px;
 }
+
 .el-menu {
   height: 100%;
   text-align: left;

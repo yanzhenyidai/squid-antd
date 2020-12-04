@@ -39,7 +39,7 @@ export const constantRouterMap = [
                 children: [
                     {
                         path: '/index/ant-drawer/',
-                        name: 'layout',
+                        name: 'Ant-抽屉全局',
                         component: () => import('@/views/antd/Drawer-Layout')
                     }
                 ]
@@ -70,7 +70,7 @@ export const constantRouterMap = [
                 children: [
                     {
                         path: '/index/ele-drawer/',
-                        name: 'layout',
+                        name: 'Ele-抽屉全局',
                         component: () => import('@/views/element/Drawer-Layout')
                     }
                 ]
@@ -79,6 +79,24 @@ export const constantRouterMap = [
     }
 ];
 
+export const defaultRouterMap = [];
+
+// const createRouter = () => new VueRouter({
+//     // mode: 'history', // require service support
+//     scrollBehavior: () => ({ y: 0 }),
+//     routes: []
+// })
+//
+// const router = createRouter()
+//
+// // Detail see: https://github.com/vuejs/vue-router/issues/1234#issuecomment-357941465
+// export function resetRouter() {
+//     const newRouter = createRouter()
+//     router.matcher = newRouter.matcher // reset router
+// }
+//
+// export default router
+
 export default new VueRouter({
-    routes: constantRouterMap
+    routes: defaultRouterMap
 })

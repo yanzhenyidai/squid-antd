@@ -1,13 +1,15 @@
-import {constantRouterMap} from '@/router'
+import {constantRouterMap, defaultRouterMap} from '@/router'
 // import axios from 'axios'
 
 const state = {
+    addMenus: [],
     menus: []
 }
 
 const mutations = {
     SET_ROUTES: (state, routes) => {
-        state.menus = routes
+        state.addMenus = routes
+        state.menus = defaultRouterMap.concat(routes)
     }
 }
 
