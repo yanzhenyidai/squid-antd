@@ -1,42 +1,44 @@
 <template>
   <div>
-    <el-form :inline="true" :model="fUser" style="margin-top: 20px" class="demo-form-inline" size="small">
-      <el-row :gutter="20">
+    <el-form :model="fUser" ref="fUserForm" label-width="80px" class="demo-ruleForm" :size="small">
+      <el-row>
         <el-col :span="8">
-          <div class="grid-content bg-purple">
-            <el-form-item label="用户代码">
-              <el-input v-model="fUser.userCode" placeholder="用户代码"></el-input>
-            </el-form-item>
-          </div>
+          <el-form-item label="用户名">
+            <el-input v-model="fUser.userName"></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-          <div class="grid-content bg-purple">
-            <el-form-item label="用户名">
-              <el-input v-model="fUser.userName" placeholder="用户名"></el-input>
-            </el-form-item>
-          </div>
+          <el-form-item label="用户代码">
+            <el-input v-model="fUser.userCode"></el-input>
+          </el-form-item>
         </el-col>
         <el-col :span="8">
-          <div class="grid-content bg-purple">
-            <el-form-item label="是否锁定">
-              <el-select v-model="fUser.isLock" placeholder="是否锁定">
-                <el-option label="全部" value=""></el-option>
-                <el-option label="否" value="0"></el-option>
-                <el-option label="是" value="1"></el-option>
-              </el-select>
-            </el-form-item>
-          </div>
+          <el-form-item label="是否锁定">
+            <el-select v-model="fUser.isLock" placeholder="是否锁定">
+              <el-option label="全部" value=""></el-option>
+              <el-option label="是" value="1"></el-option>
+              <el-option label="否" value="0"></el-option>
+            </el-select>
+          </el-form-item>
         </el-col>
       </el-row>
-    </el-form>
 
+      <el-row>
+        <el-button type="primary" icon="el-icon-search" :size="small" @click="findByPage">搜索</el-button>
+        <el-button type="primary" :size="small">主要按钮</el-button>
+        <el-button type="success" :size="small">成功按钮</el-button>
+        <el-button type="info" :size="small">信息按钮</el-button>
+        <el-button type="warning" :size="small">警告按钮</el-button>
+        <el-button type="danger" :size="small">危险按钮</el-button>
+      </el-row>
+    </el-form>
 
     <el-table
         :data="tableData"
         :height="tableHeight"
         border
-        size="small"
-        style="width: 100%;"
+        :size="small"
+        style="width: 100%;margin-top: 10px;"
         v-loading="loading"
         ref="topictable"
     >
@@ -75,13 +77,12 @@
           width="100">
         <!--        <template slot-scope="scope">-->
         <template>
-          <el-button @click="drawer=true" type="text" size="small">查看</el-button>
-          <el-button type="text" size="small">编辑</el-button>
+          <el-button @click="drawer=true" type="text" :size="small">查看</el-button>
+          <el-button type="text" :size="small">编辑</el-button>
         </template>
       </el-table-column>
     </el-table>
 
-    <div style="margin-top: 10px">
       <el-pagination
           @size-change="handleSizeChange"
           @current-change="handleCurrentChange"
@@ -89,9 +90,9 @@
           :page-sizes="[10, 20, 50, 100]"
           :page-size="pageSize"
           layout="total, sizes, prev, pager, next, jumper"
-          :total="pageTotal">
+          :total="pageTotal"
+      style="margin-top: 10px">
       </el-pagination>
-    </div>
 
     <el-drawer
         title="我是标题"
@@ -111,6 +112,7 @@
 export default {
   data() {
     return {
+      small: 'small',
       drawer: false,
       tableData: [],
       multipleSelection: [],
@@ -123,6 +125,14 @@ export default {
         userName: '',
         userCode: '',
         isLock: ''
+      },
+      dengmiQueryForm: {
+        mimian:'',
+        mimu:'',
+        mige:'',
+        midi:'',
+        zuozhe:'',
+        midiLength:''
       }
     }
   },
@@ -168,9 +178,6 @@ export default {
     }
   }, mounted() {
     this.findByPage()
-    console.log(window.innerHeight)
-    console.log(this.$refs.topictable.$el)
-    console.log(this.$refs.topictable.$el.offsetTop)
     this.tableHeight =
         window.innerHeight - this.$refs.topictable.$el.offsetTop - 60;
     console.log(this.tableHeight)
@@ -180,5 +187,10 @@ export default {
 </script>
 
 <style>
+.el-select {
+  display: inline-block;
+  position: relative;
+  width: 100% !important;
+}
 </style>
 

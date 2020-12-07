@@ -1,115 +1,83 @@
 <template>
-  <div>test</div>
+  <div>
+    <el-form :model="dengmiQueryForm" ref="dengmiQueryForm" label-width="100px" class="demo-ruleForm" size="mini">
+      <el-row>
+        <el-col span="8">
+          <el-form-item label="谜面">
+            <el-input v-model="dengmiQueryForm.mimian"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="谜目">
+            <el-input v-model="dengmiQueryForm.mimu"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="谜格">
+            <el-input v-model="dengmiQueryForm.mige"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col span="8">
+          <el-form-item label="谜底">
+            <el-input v-model="dengmiQueryForm.midi"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="作者">
+            <el-input v-model="dengmiQueryForm.zuozhe"></el-input>
+          </el-form-item>
+        </el-col>
+        <el-col span="8">
+          <el-form-item label="谜底字数">
+            <el-input v-model="dengmiQueryForm.midiLength"></el-input>
+          </el-form-item>
+        </el-col>
+      </el-row>
+      <el-row>
+        <el-col>
+          <el-button type="primary" @click="submitForm" icon="el-icon-search">查询</el-button>
+          <el-button type="warning" @click="resetForm" icon="el-icon-search" plain>重置</el-button>
+        </el-col>
+      </el-row>
+    </el-form>
+  </div>
 </template>
 
-<!--<template>-->
-<!--  <el-container>-->
-<!--    <el-aside width="15%">-->
+<script>
+export default {
+  name: "dengmiQuery",
+  data() {
+    return {
+      dengmiQueryForm: {
+        mimian:'',
+        mimu:'',
+        mige:'',
+        midi:'',
+        zuozhe:'',
+        midiLength:''
+      }
+    };
+  },
+  methods: {
+    submitForm(formName) {
+      this.$refs[formName].validate((valid) => {
+        if (valid) {
+          alert('submit!');
+        } else {
+          console.log('error submit!!');
+          return false;
+        }
+      });
+    },
+    resetForm(formName) {
+      this.$refs[formName].resetFields();
+    }
+  }
+}
+</script>
 
-<!--      <el-container>-->
-<!--        <el-header>Header</el-header>-->
-<!--        <el-main>-->
-<!--          <el-menu-->
-<!--              default-active="2"-->
-<!--              class="el-menu-vertical-demo"-->
-<!--              @open="handleOpen"-->
-<!--              @close="handleClose">-->
-<!--            <el-submenu index="1">-->
-<!--              <template slot="title">-->
-<!--                <i class="el-icon-location"></i>-->
-<!--                <span>导航一</span>-->
-<!--              </template>-->
-<!--              <el-menu-item-group>-->
-<!--                <template slot="title">分组一</template>-->
-<!--                <el-menu-item index="1-1">选项1</el-menu-item>-->
-<!--                <el-menu-item index="1-2">选项2</el-menu-item>-->
-<!--              </el-menu-item-group>-->
-<!--              <el-menu-item-group title="分组2">-->
-<!--                <el-menu-item index="1-3">选项3</el-menu-item>-->
-<!--              </el-menu-item-group>-->
-<!--              <el-submenu index="1-4">-->
-<!--                <template slot="title">选项4</template>-->
-<!--                <el-menu-item index="1-4-1">选项1</el-menu-item>-->
-<!--              </el-submenu>-->
-<!--            </el-submenu>-->
-<!--            <el-menu-item index="2">-->
-<!--              <i class="el-icon-menu"></i>-->
-<!--              <span slot="title">导航二</span>-->
-<!--            </el-menu-item>-->
-<!--            <el-menu-item index="3" disabled>-->
-<!--              <i class="el-icon-document"></i>-->
-<!--              <span slot="title">导航三</span>-->
-<!--            </el-menu-item>-->
-<!--            <el-menu-item index="4">-->
-<!--              <i class="el-icon-setting"></i>-->
-<!--              <span slot="title">导航四</span>-->
-<!--            </el-menu-item>-->
-<!--          </el-menu>-->
+<style scoped>
 
-<!--        </el-main>-->
-<!--      </el-container>-->
-<!--    </el-aside>-->
-
-<!--    <el-main width="85%">-->
-<!--      <el-container>-->
-<!--        <el-header style="background: #52c41a">Header</el-header>-->
-<!--        <el-main>-->
-<!--           <router-view/>-->
-<!--        </el-main>-->
-<!--        <el-footer>Footer</el-footer>-->
-<!--      </el-container>-->
-<!--    </el-main>-->
-<!--  </el-container>-->
-<!--</template>-->
-
-<!--<script>-->
-<!--export default {-->
-<!--  name: "Drawer-Layout",-->
-<!--  data() {-->
-<!--    return {-->
-<!--      isCollapse: true-->
-<!--    }-->
-<!--  },-->
-<!--  methods: {-->
-<!--    handleOpen(key, keyPath) {-->
-<!--      console.log(key, keyPath);-->
-<!--    },-->
-<!--    handleClose(key, keyPath) {-->
-<!--      console.log(key, keyPath);-->
-<!--    }-->
-<!--  }-->
-<!--}-->
-<!--</script>-->
-
-<!--<style>-->
-<!--.el-header, .el-footer {-->
-<!--  background-color: #B3C0D1;-->
-<!--  color: #333;-->
-<!--  text-align: center;-->
-<!--  line-height: 60px;-->
-<!--}-->
-
-<!--.el-container {-->
-<!--  height: 100%;-->
-<!--}-->
-
-<!--.el-aside {-->
-<!--  background-color: #D3DCE6;-->
-<!--  color: #333;-->
-<!--  text-align: center;-->
-<!--  line-height: 200px;-->
-<!--  padding: 5px;-->
-<!--}-->
-
-<!--.el-main {-->
-<!--  background-color: #E9EEF3;-->
-<!--  color: #333;-->
-<!--  text-align: center;-->
-<!--  line-height: 160px;-->
-<!--  padding: 5px;-->
-<!--}-->
-<!--.el-menu {-->
-<!--  height: 100%;-->
-<!--  text-align: left;-->
-<!--}-->
-<!--</style>-->
+</style>

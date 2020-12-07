@@ -1,5 +1,5 @@
 <template>
-  <el-submenu :index="menu.path">
+  <el-submenu :index="menu.path" v-if="!menu.hidden">
     <template slot="title">
       <i class="el-icon-location"></i>
       <span>{{ menu.name }}</span>
@@ -10,6 +10,7 @@
       <el-menu-item
           :index="children.path"
           :key="children.path"
+          @click="doTag(children)"
       >
 
           {{children.name}}
@@ -32,6 +33,14 @@ export default {
     menu: Object
   },
   methods: {
+    doTag(children){
+        console.log(children);
+        const tag = {};
+        tag.name = children.name
+        tag.path = children.path
+        tag.closable = true
+        this.$store.dispatch('addTag',tag)
+    }
   },
   components: {
   }

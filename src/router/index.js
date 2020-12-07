@@ -76,10 +76,17 @@ export const constantRouterMap = [
                 ]
             },
         ]
-    }
+    },
+    { path: '*', redirect: '/404', hidden: true }
 ];
 
-export const defaultRouterMap = [];
+export const defaultRouterMap = [
+    {
+        path: '/404',
+        component: () => import('@/views/404'),
+        hidden: true
+    },
+];
 
 // const createRouter = () => new VueRouter({
 //     // mode: 'history', // require service support
@@ -100,3 +107,11 @@ export const defaultRouterMap = [];
 export default new VueRouter({
     routes: defaultRouterMap
 })
+
+const originalPush = VueRouter.prototype.push;
+
+VueRouter.prototype.push = function push(location) {
+
+    return originalPush.call(this, location).catch((err) => err);
+
+};
