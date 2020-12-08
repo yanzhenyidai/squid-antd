@@ -1,5 +1,5 @@
 <template>
-  <h1>123123123123</h1>
+  <h1>我是欢迎页</h1>
 </template>
 
 <script>

@@ -75,6 +75,11 @@ export const constantRouterMap = [
                     }
                 ]
             },
+            {
+                path: '/index/viewerjs',
+                name: 'ViewJS',
+                component: () => import('@/views/viewerjs/Viewer')
+            },
         ]
     },
     { path: '*', redirect: '/404', hidden: true }
