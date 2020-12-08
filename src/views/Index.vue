@@ -46,7 +46,7 @@
 <script>
 import {mapGetters} from 'vuex'
 import SideMenu from "@/views/ele-layout/SideMenu";
-import Tags from "@/views/layout/Tags";
+import Tags from "@/views/ele-layout/Tags";
 
 export default {
   name: "Index",

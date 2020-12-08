@@ -10,7 +10,7 @@
       {{ tag.name }}
       </router-link>
     </el-tag>
-    <el-input
+    <!--<el-input
         class="input-new-tag"
         v-if="inputVisible"
         v-model="inputValue"
@@ -20,12 +20,13 @@
         @blur="handleInputConfirm"
     >
     </el-input>
-    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>
+    <el-button v-else class="button-new-tag" size="small" @click="showInput">+ New Tag</el-button>-->
   </div>
 </template>
 
 <script>
 import {mapGetters} from 'vuex'
+import path from 'path'
 
 export default {
   data() {
@@ -36,13 +37,36 @@ export default {
     };
   },
   computed: {
-    ...mapGetters(['dynamicTags'])
+    ...mapGetters(['dynamicTags','menus'])
+  },
+  mounted() {
+    let children = this.$route
+
+    const tag = {};
+    tag.name = children.name
+    tag.path = children.path
+    tag.closable = true
+    this.$store.dispatch('addTag',tag)
+    // this.menus.forEach(menu => {
+    //   if(menu.path !== this.$route.path && menu.children !== undefined){
+    //     menu.children.forEach(children => {
+    //       if(children.path === this.$route.path){
+    //         console.log(children)
+    //       }
+    //     })
+    //   }
+    // })
   },
   methods: {
     handleClose(tag) {
       // alert(tag);
       // this.dynamicTags.splice(this.dynamicTags.indexOf(tag), 1);
-      this.$store.dispatch('removeTag',tag)
+      let route =  this.$store.dispatch('removeTag',tag)
+
+      route.then(value => {
+        const lastRoute = value.slice(-1)[0]
+        this.$router.push(lastRoute.path)
+      })
     },
 
     showInput() {

@@ -11,7 +11,14 @@ const actions = {
         commit('ADD_TAG', {tag})
     },
     removeTag({commit}, tag) {
-        commit('REMOVE_TAG', {tag})
+
+       return  new Promise(resolve => {
+           commit('REMOVE_TAG', {tag})
+            resolve(state.dynamicTags)
+        })
+
+
+
     }
 }
 
@@ -22,8 +29,6 @@ const mutations = {
     },
     REMOVE_TAG: (state, {tag}) => {
         state.dynamicTags.splice(state.dynamicTags.indexOf(tag), 1)
-
-        console.log(state.dynamicTags)
     }
 }
 

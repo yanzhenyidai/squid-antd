@@ -34,7 +34,6 @@ export default {
   },
   methods: {
     doTag(children){
-        console.log(children);
         const tag = {};
         tag.name = children.name
         tag.path = children.path
